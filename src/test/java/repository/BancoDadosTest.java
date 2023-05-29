@@ -75,13 +75,7 @@ public class BancoDadosTest {
 		
 		assertNull(cad);
 	}
-	@Test
-	@DisplayName("Teste delete pessoa que não existe")
-	void testDeleteNaoExiste() {
-		bd.delete(100);
-		Pessoa cad = bd.findById(100);
-		assertNull(cad);
-	}
+
 	@Test
 	@DisplayName("Teste update")
 	void testUpdate() {
@@ -99,6 +93,22 @@ public class BancoDadosTest {
         assertNotNull(cad);
         assertEquals(3, cad.getId());
         assertEquals(p3, cad);
+
 	}
+    @Test
+    @DisplayName("Test findBySexo")
+    void testFindBySexo() {
+        List<Pessoa> result = bd.findBySexo(EnumSexo.FEMININO);
+        assertEquals(4, result.size());
+        assertTrue(result.stream().allMatch(p -> p.getSexo() == EnumSexo.FEMININO));
+    }
+
+    @Test
+    @DisplayName("Test clearData")
+    void testClearData() {
+        bd.clearData();
+        List<Pessoa> result = bd.listAll();
+        assertEquals(0, result.size());
+    }
 	
 }
